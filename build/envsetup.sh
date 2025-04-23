@@ -38,7 +38,7 @@ function choose_board()
 	done
 }
 
-function lunch_imx6ull()
+function launch_imx6ull()
 {
 	TARGET_DIR_NAME="$IMX_BUILD_CONFIG"
 	export TARGET_OUTPUT_DIR="$BUILDROOT_OUTPUT_DIR/$TARGET_DIR_NAME"
@@ -82,7 +82,7 @@ function main()
 	alias croot="cd ${TOP_DIR}"
 
 	RK_DEFCONFIG_ARRAY=(
-		$(cd ${BUILDROOT_DIR}/configs/; ls imx6ullevk_* | \
+		$(cd ${BUILDROOT_DIR}/configs/; ls alientek_* | \
 			sed "s/_defconfig$//" | grep "$1" | sort)
 	)
 
@@ -110,7 +110,7 @@ function main()
 
 	source ${TOP_DIR}/device/.BoardConfig.mk
 
-	lunch_imx6ull
+	launch_imx6ull
 }
 
 if [ "${BASH_SOURCE}" == "$0" ];then

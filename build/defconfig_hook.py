@@ -36,8 +36,8 @@ def load_base(base_cfgs, cfg):
         if n:
             name = n.group(1)
             path = os.path.dirname(os.path.realpath(cfg))
-            if not path.endswith("rockchip"):
-                path += "/rockchip"
+            if not path.endswith("alientek"):
+                path += "/alientek"
             name = path + '/' + name
             load_base(base_cfgs, name)
             continue
@@ -104,8 +104,8 @@ def merge_base(config):
 
         if n:
             path = os.path.dirname(os.path.realpath(config))
-            if not path.endswith("rockchip"):
-                path += "/rockchip"
+            if not path.endswith("alientek"):
+                path += "/alientek"
             name = path + '/' + n.group(1)
 
             res, ovl = merge_base(name)
