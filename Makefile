@@ -1013,18 +1013,21 @@ defconfig: $(BUILD_DIR)/buildroot-config/conf outputmakefile
 define percent_defconfig
 # Override the BR2_DEFCONFIG from COMMON_CONFIG_ENV with the new defconfig
 %_defconfig: $(BUILD_DIR)/buildroot-config/conf $(1)/configs/%_defconfig outputmakefile
-	@$$(COMMON_CONFIG_ENV) BR2_DEFCONFIG=$(1)/configs/$$@ \
-		$$< --defconfig=$(1)/configs/$$@ $$(CONFIG_CONFIG_IN)
+	$(TOPDIR)/build/defconfig_hook.py -m $(1)/configs/$$@ $(BASE_DIR)/.imx6ullconfig
+	$$(COMMON_CONFIG_ENV) BR2_DEFCONFIG=$(1)/configs/$$@ \
+		$$< --defconfig=$(BASE_DIR)/.imx6ullconfig $$(CONFIG_CONFIG_IN)
 endef
 $(eval $(foreach d,$(call reverse,$(TOPDIR) $(BR2_EXTERNAL_DIRS)),$(call percent_defconfig,$(d))$(sep)))
 
 update-defconfig: savedefconfig
 
 savedefconfig: $(BUILD_DIR)/buildroot-config/conf outputmakefile
-	@$(COMMON_CONFIG_ENV) $< \
-		--savedefconfig=$(if $(DEFCONFIG),$(DEFCONFIG),$(CONFIG_DIR)/defconfig) \
-		$(CONFIG_CONFIG_IN)
+	@$(COMMON_CONFIG_ENV) $< --savedefconfig=$(CFG_) $(CONFIG_CONFIG_IN)
 	@$(SED) '/^BR2_DEFCONFIG=/d' $(if $(DEFCONFIG),$(DEFCONFIG),$(CONFIG_DIR)/defconfig)
+
+	cat $(CFG_) >> $(CFG_).split
+	$(TOPDIR)/build/defconfig_hook.py -s $(CFG_).split $(CFG_)
+	rm $(CFG_).split
 
 .PHONY: defconfig savedefconfig update-defconfig
 
