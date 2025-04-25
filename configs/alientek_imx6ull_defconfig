@@ -1,14 +1,15 @@
 #include "audio.config"
 #include "base.config"
 #include "gcc9.config"
+#include "gdb.config"
 #include "imx6ull.config"
 #include "network.config"
-
-BR2_PACKAGE_HOST_GDB = y 
-BR2_PACKAGE_LIBNFS =y 
-BR2_PACKAGE_TSLIB = y 
-BR2_PACKAGE_AUTO_DEPLOY = y 
-BR2_PACKAGE_SOFTAP = y 
-BR2_PACKAGE_CAN_UTILS = y 
-BR2_PACKAGE_IPROUTE2 = y 
-BR2_SYSTEM_ENABLE_NLS = y
+BR2_PACKAGE_HOST_GDB=y 
+BR2_PACKAGE_LIBNFS=y 
+BR2_PACKAGE_TSLIB=y 
+BR2_PACKAGE_AUTO_DEPLOY=y 
+BR2_PACKAGE_SOFTAP=y 
+BR2_PACKAGE_CAN_UTILS=y 
+BR2_PACKAGE_IPROUTE2=y 
+BR2_SYSTEM_ENABLE_NLS=y
+BR2_PACKAGE_ZLIB=y

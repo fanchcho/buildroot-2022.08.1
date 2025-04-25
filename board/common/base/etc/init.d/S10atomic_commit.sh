@@ -11,7 +11,7 @@ case "$1" in
 	start)
 		for p in $(modetest|grep "^Planes:" -A 9999|grep -o "^[0-9]*");
 		do
-			modetest -M rockchip -aw $p:ASYNC_COMMIT:1 &>/dev/null
+			modetest -M imx6ull -aw $p:ASYNC_COMMIT:1 &>/dev/null
 		done
 		;;
 	stop)
