@@ -3,6 +3,7 @@
 import os
 import re
 import sys
+import platform
 
 def common_config(configs):
     allconfigs = {}
@@ -99,6 +100,7 @@ def split_config(base_cfgs, config, output):
 def merge_base(config):
     result = ''
     overlay = ''
+    toolchain = ''
     for line in open(config):
         n = re.match('#include\s*"(\w+\.\w+)"$', line)
 
@@ -117,7 +119,16 @@ def merge_base(config):
             if m:
                 overlay = (overlay + " " + m.group(1)).strip()
             else:
-                result += line
+                m = re.match('BR2_TOOLCHAIN_EXTERNAL_PATH="(.*)"$', line)
+                if m:
+                    arch = platform.machine()
+                    if arch == "x86_64":
+                        toolchain = line.replace("aarch64", "x86_64")
+                        result += toolchain
+                    else:
+                        result += line
+                else:
+                    result += line
     return result, overlay
 
 def merge_cfgs(config, output):
